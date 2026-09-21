@@ -1,0 +1,1075 @@
+<app-sidebar></app-sidebar>
+
+<main class="SUPPORT-5444654-PAGE-54545-page">
+
+  <!-- PAGE HEADER -->
+  <div class="SUPPORT-5444654-PAGE-54545-header">
+
+    <div>
+
+      <div class="SUPPORT-5444654-PAGE-54545-breadcrumb">
+
+        Community Admin
+
+        <i class="bi bi-chevron-right"></i>
+
+        Customer Support
+
+      </div>
+
+      <h2>Customer Support</h2>
+
+      <p>
+        Manage user complaints, support requests and customer conversations.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="SUPPORT-5444654-PAGE-54545-refresh-btn"
+      (click)="refreshTickets()">
+
+      <i class="bi bi-arrow-clockwise"></i>
+
+      Refresh
+
+    </button>
+
+  </div>
+
+
+  <!-- STATISTICS -->
+  <div class="SUPPORT-5444654-PAGE-54545-stats">
+
+
+    <!-- TOTAL -->
+    <div class="SUPPORT-5444654-PAGE-54545-stat-card">
+
+      <div class="SUPPORT-5444654-PAGE-54545-stat-icon total">
+
+        <i class="bi bi-headset"></i>
+
+      </div>
+
+      <div>
+
+        <span>Total Tickets</span>
+
+        <strong>
+          {{ tickets.length }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- OPEN -->
+    <div class="SUPPORT-5444654-PAGE-54545-stat-card">
+
+      <div class="SUPPORT-5444654-PAGE-54545-stat-icon open">
+
+        <i class="bi bi-envelope-open"></i>
+
+      </div>
+
+      <div>
+
+        <span>Open Tickets</span>
+
+        <strong>
+          {{ openTickets }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- IN PROGRESS -->
+    <div class="SUPPORT-5444654-PAGE-54545-stat-card">
+
+      <div class="SUPPORT-5444654-PAGE-54545-stat-icon progress">
+
+        <i class="bi bi-hourglass-split"></i>
+
+      </div>
+
+      <div>
+
+        <span>In Progress</span>
+
+        <strong>
+          {{ inProgressTickets }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- RESOLVED -->
+    <div class="SUPPORT-5444654-PAGE-54545-stat-card">
+
+      <div class="SUPPORT-5444654-PAGE-54545-stat-icon resolved">
+
+        <i class="bi bi-check-circle"></i>
+
+      </div>
+
+      <div>
+
+        <span>Resolved</span>
+
+        <strong>
+          {{ resolvedTickets }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- HIGH PRIORITY -->
+    <div class="SUPPORT-5444654-PAGE-54545-stat-card">
+
+      <div class="SUPPORT-5444654-PAGE-54545-stat-icon high">
+
+        <i class="bi bi-exclamation-triangle"></i>
+
+      </div>
+
+      <div>
+
+        <span>High Priority</span>
+
+        <strong>
+          {{ highPriorityTickets }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FILTER -->
+  <div class="SUPPORT-5444654-PAGE-54545-filter-card">
+
+
+    <!-- SEARCH -->
+    <div class="SUPPORT-5444654-PAGE-54545-search">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+        placeholder="Search ticket, user, email or subject..."
+      />
+
+      @if (searchText) {
+
+        <button
+          type="button"
+          (click)="searchText = ''; onSearch()">
+
+          <i class="bi bi-x"></i>
+
+        </button>
+
+      }
+
+    </div>
+
+
+    <!-- FILTERS -->
+    <div class="SUPPORT-5444654-PAGE-54545-filters">
+
+      <select
+        class="SUPPORT-5444654-PAGE-54545-select"
+        [(ngModel)]="selectedStatus"
+        (change)="onFilterChange()">
+
+        <option value="All">
+          All Status
+        </option>
+
+        <option value="Open">
+          Open
+        </option>
+
+        <option value="In Progress">
+          In Progress
+        </option>
+
+        <option value="Resolved">
+          Resolved
+        </option>
+
+        <option value="Closed">
+          Closed
+        </option>
+
+      </select>
+
+
+      <select
+        class="SUPPORT-5444654-PAGE-54545-select"
+        [(ngModel)]="selectedPriority"
+        (change)="onFilterChange()">
+
+        <option value="All">
+          All Priority
+        </option>
+
+        <option value="High">
+          High
+        </option>
+
+        <option value="Medium">
+          Medium
+        </option>
+
+        <option value="Low">
+          Low
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- SUPPORT LIST -->
+  <div class="SUPPORT-5444654-PAGE-54545-card">
+
+    <div class="SUPPORT-5444654-PAGE-54545-card-header">
+
+      <div>
+
+        <h3>Support Requests</h3>
+
+        <span>
+          {{ filteredTickets.length }} requests found
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- DESKTOP TABLE -->
+    <div class="SUPPORT-5444654-PAGE-54545-table-wrapper">
+
+      <table class="SUPPORT-5444654-PAGE-54545-table">
+
+        <thead>
+
+          <tr>
+
+            <th>Ticket</th>
+
+            <th>User</th>
+
+            <th>Subject</th>
+
+            <th>Category</th>
+
+            <th>Priority</th>
+
+            <th>Status</th>
+
+            <th>Created</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (ticket of paginatedTickets; track ticket.id) {
+
+            <tr>
+
+              <!-- TICKET -->
+              <td>
+
+                <div class="SUPPORT-5444654-PAGE-54545-ticket-id">
+
+                  <strong>
+                    {{ ticket.id }}
+                  </strong>
+
+                  <span>
+                    {{ ticket.lastReply }}
+                  </span>
+
+                </div>
+
+              </td>
+
+
+              <!-- USER -->
+              <td>
+
+                <div class="SUPPORT-5444654-PAGE-54545-user">
+
+                  <div class="SUPPORT-5444654-PAGE-54545-avatar">
+
+                    {{ ticket.avatar }}
+
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      {{ ticket.userName }}
+                    </strong>
+
+                    <span>
+                      {{ ticket.userEmail }}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- SUBJECT -->
+              <td>
+
+                <div class="SUPPORT-5444654-PAGE-54545-subject">
+
+                  <strong>
+                    {{ ticket.subject }}
+                  </strong>
+
+                  <span>
+                    {{ ticket.message }}
+                  </span>
+
+                </div>
+
+              </td>
+
+
+              <!-- CATEGORY -->
+              <td>
+
+                <span class="SUPPORT-5444654-PAGE-54545-category">
+
+                  {{ ticket.category }}
+
+                </span>
+
+              </td>
+
+
+              <!-- PRIORITY -->
+              <td>
+
+                <span
+                  class="SUPPORT-5444654-PAGE-54545-priority"
+                  [class.high]="ticket.priority === 'High'"
+                  [class.medium]="ticket.priority === 'Medium'"
+                  [class.low]="ticket.priority === 'Low'">
+
+                  <i class="bi bi-circle-fill"></i>
+
+                  {{ ticket.priority }}
+
+                </span>
+
+              </td>
+
+
+              <!-- STATUS -->
+              <td>
+
+                <span
+                  class="SUPPORT-5444654-PAGE-54545-status"
+                  [class.open]="ticket.status === 'Open'"
+                  [class.progress]="ticket.status === 'In Progress'"
+                  [class.resolved]="ticket.status === 'Resolved'"
+                  [class.closed]="ticket.status === 'Closed'">
+
+                  {{ ticket.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- CREATED -->
+              <td>
+
+                <span class="SUPPORT-5444654-PAGE-54545-date">
+
+                  {{ ticket.createdAt }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ACTION -->
+              <td>
+
+                <div class="SUPPORT-5444654-PAGE-54545-actions">
+
+                  <button
+                    type="button"
+                    title="View"
+                    (click)="viewTicket(ticket)">
+
+                    <i class="bi bi-eye"></i>
+
+                  </button>
+
+
+                  <button
+                    type="button"
+                    title="Reply"
+                    (click)="openReply(ticket)">
+
+                    <i class="bi bi-reply"></i>
+
+                  </button>
+
+
+                  <button
+                    type="button"
+                    title="Delete"
+                    class="delete"
+                    (click)="deleteTicket(ticket)">
+
+                    <i class="bi bi-trash"></i>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+
+          @if (filteredTickets.length === 0) {
+
+            <tr>
+
+              <td
+                colspan="8"
+                class="SUPPORT-5444654-PAGE-54545-empty">
+
+                <i class="bi bi-headset"></i>
+
+                <strong>
+                  No support requests found
+                </strong>
+
+                <span>
+                  Try changing your search or filters.
+                </span>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- MOBILE CARDS -->
+    <div class="SUPPORT-5444654-PAGE-54545-mobile-list">
+
+      @for (ticket of paginatedTickets; track ticket.id) {
+
+        <div class="SUPPORT-5444654-PAGE-54545-mobile-ticket">
+
+
+          <!-- TOP -->
+          <div class="SUPPORT-5444654-PAGE-54545-mobile-top">
+
+            <div class="SUPPORT-5444654-PAGE-54545-user">
+
+              <div class="SUPPORT-5444654-PAGE-54545-avatar">
+
+                {{ ticket.avatar }}
+
+              </div>
+
+              <div>
+
+                <strong>
+                  {{ ticket.userName }}
+                </strong>
+
+                <span>
+                  {{ ticket.userEmail }}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <span class="SUPPORT-5444654-PAGE-54545-mobile-id">
+
+              {{ ticket.id }}
+
+            </span>
+
+          </div>
+
+
+          <!-- SUBJECT -->
+          <div class="SUPPORT-5444654-PAGE-54545-mobile-subject">
+
+            <strong>
+              {{ ticket.subject }}
+            </strong>
+
+            <span>
+              {{ ticket.message }}
+            </span>
+
+          </div>
+
+
+          <!-- DETAILS -->
+          <div class="SUPPORT-5444654-PAGE-54545-mobile-details">
+
+            <div>
+
+              <span>Category</span>
+
+              <strong>
+                {{ ticket.category }}
+              </strong>
+
+            </div>
+
+            <div>
+
+              <span>Created</span>
+
+              <strong>
+                {{ ticket.createdAt }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- STATUS -->
+          <div class="SUPPORT-5444654-PAGE-54545-mobile-status">
+
+            <span
+              class="SUPPORT-5444654-PAGE-54545-priority"
+              [class.high]="ticket.priority === 'High'"
+              [class.medium]="ticket.priority === 'Medium'"
+              [class.low]="ticket.priority === 'Low'">
+
+              {{ ticket.priority }}
+
+            </span>
+
+
+            <span
+              class="SUPPORT-5444654-PAGE-54545-status"
+              [class.open]="ticket.status === 'Open'"
+              [class.progress]="ticket.status === 'In Progress'"
+              [class.resolved]="ticket.status === 'Resolved'"
+              [class.closed]="ticket.status === 'Closed'">
+
+              {{ ticket.status }}
+
+            </span>
+
+          </div>
+
+
+          <!-- ACTION -->
+          <div class="SUPPORT-5444654-PAGE-54545-mobile-actions">
+
+            <button
+              type="button"
+              (click)="viewTicket(ticket)">
+
+              <i class="bi bi-eye"></i>
+
+              View
+
+            </button>
+
+
+            <button
+              type="button"
+              (click)="openReply(ticket)">
+
+              <i class="bi bi-reply"></i>
+
+              Reply
+
+            </button>
+
+
+            <button
+              type="button"
+              (click)="deleteTicket(ticket)">
+
+              <i class="bi bi-trash"></i>
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+
+      @if (filteredTickets.length === 0) {
+
+        <div class="SUPPORT-5444654-PAGE-54545-mobile-empty">
+
+          <i class="bi bi-headset"></i>
+
+          <strong>
+            No support requests found
+          </strong>
+
+          <span>
+            Try changing your search or filters.
+          </span>
+
+        </div>
+
+      }
+
+    </div>
+
+    @if (filteredTickets.length > 0) {
+
+      <div class="SUPPORT-5444654-PAGE-54545-pagination">
+
+        <span>
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
+
+        <div>
+
+          <button
+            type="button"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()"
+            aria-label="Previous page">
+
+            <i class="bi bi-chevron-left"></i>
+
+          </button>
+
+          @for (page of pageNumbers; track page) {
+
+            <button
+              type="button"
+              [class.active]="currentPage === page"
+              (click)="goToPage(page)">
+
+              {{ page }}
+
+            </button>
+
+          }
+
+          <button
+            type="button"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+            aria-label="Next page">
+
+            <i class="bi bi-chevron-right"></i>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</main>
+
+
+<!-- =====================================================
+     VIEW TICKET MODAL
+===================================================== -->
+
+@if (showTicketModal && selectedTicket) {
+
+  <div
+    class="SUPPORT-5444654-PAGE-54545-modal-overlay"
+    (click)="closeTicketModal()">
+
+    <div
+      class="SUPPORT-5444654-PAGE-54545-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- MODAL HEADER -->
+      <div class="SUPPORT-5444654-PAGE-54545-modal-header">
+
+        <div>
+
+          <h3>
+            {{ selectedTicket.id }}
+          </h3>
+
+          <span>
+            Support Request Details
+          </span>
+
+        </div>
+
+
+        <button
+          type="button"
+          (click)="closeTicketModal()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- BODY -->
+      <div class="SUPPORT-5444654-PAGE-54545-modal-body">
+
+
+        <!-- USER -->
+        <div class="SUPPORT-5444654-PAGE-54545-modal-user">
+
+          <div class="SUPPORT-5444654-PAGE-54545-large-avatar">
+
+            {{ selectedTicket.avatar }}
+
+          </div>
+
+          <div>
+
+            <strong>
+              {{ selectedTicket.userName }}
+            </strong>
+
+            <span>
+              {{ selectedTicket.userEmail }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- SUBJECT -->
+        <div class="SUPPORT-5444654-PAGE-54545-modal-subject">
+
+          <span>Subject</span>
+
+          <h4>
+            {{ selectedTicket.subject }}
+          </h4>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+        <div class="SUPPORT-5444654-PAGE-54545-message-box">
+
+          <span>
+            User Message
+          </span>
+
+          <p>
+            {{ selectedTicket.message }}
+          </p>
+
+        </div>
+
+
+        <!-- DETAILS -->
+        <div class="SUPPORT-5444654-PAGE-54545-modal-grid">
+
+          <div>
+
+            <span>Category</span>
+
+            <strong>
+              {{ selectedTicket.category }}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>Priority</span>
+
+            <strong>
+              {{ selectedTicket.priority }}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>Created</span>
+
+            <strong>
+              {{ selectedTicket.createdAt }}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span>Last Reply</span>
+
+            <strong>
+              {{ selectedTicket.lastReply }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- STATUS CONTROL -->
+        <div class="SUPPORT-5444654-PAGE-54545-status-control">
+
+          <span>
+            Update Status
+          </span>
+
+
+          <div>
+
+            <button
+              type="button"
+              [class.active]="selectedTicket.status === 'Open'"
+              (click)="changeStatus(selectedTicket, 'Open')">
+
+              Open
+
+            </button>
+
+
+            <button
+              type="button"
+              [class.active]="selectedTicket.status === 'In Progress'"
+              (click)="changeStatus(selectedTicket, 'In Progress')">
+
+              In Progress
+
+            </button>
+
+
+            <button
+              type="button"
+              [class.active]="selectedTicket.status === 'Resolved'"
+              (click)="changeStatus(selectedTicket, 'Resolved')">
+
+              Resolved
+
+            </button>
+
+
+            <button
+              type="button"
+              [class.active]="selectedTicket.status === 'Closed'"
+              (click)="changeStatus(selectedTicket, 'Closed')">
+
+              Closed
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- FOOTER -->
+      <div class="SUPPORT-5444654-PAGE-54545-modal-footer">
+
+        <button
+          type="button"
+          class="SUPPORT-5444654-PAGE-54545-close-btn"
+          (click)="closeTicketModal()">
+
+          Close
+
+        </button>
+
+
+        <button
+          type="button"
+          class="SUPPORT-5444654-PAGE-54545-reply-btn"
+          (click)="closeTicketModal(); openReply(selectedTicket)">
+
+          <i class="bi bi-reply"></i>
+
+          Reply to User
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- =====================================================
+     REPLY MODAL
+===================================================== -->
+
+@if (showReplyModal && selectedTicket) {
+
+  <div
+    class="SUPPORT-5444654-PAGE-54545-modal-overlay"
+    (click)="closeReply()">
+
+    <div
+      class="SUPPORT-5444654-PAGE-54545-reply-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <div class="SUPPORT-5444654-PAGE-54545-modal-header">
+
+        <div>
+
+          <h3>
+            Reply to User
+          </h3>
+
+          <span>
+            {{ selectedTicket.userName }}
+            · {{ selectedTicket.id }}
+          </span>
+
+        </div>
+
+
+        <button
+          type="button"
+          (click)="closeReply()">
+
+          <i class="bi bi-x-lg"></i>
+
+        </button>
+
+      </div>
+
+
+      <div class="SUPPORT-5444654-PAGE-54545-reply-body">
+
+        <div class="SUPPORT-5444654-PAGE-54545-original-message">
+
+          <span>
+            Original Request
+          </span>
+
+          <strong>
+            {{ selectedTicket.subject }}
+          </strong>
+
+          <p>
+            {{ selectedTicket.message }}
+          </p>
+
+        </div>
+
+
+        <label>
+          Your Reply
+        </label>
+
+        <textarea
+          [(ngModel)]="replyMessage"
+          placeholder="Type your response to the customer..."
+          rows="6">
+        </textarea>
+
+
+        <div class="SUPPORT-5444654-PAGE-54545-reply-info">
+
+          <i class="bi bi-info-circle"></i>
+
+          Sending a reply will automatically mark this ticket
+          as <strong>In Progress</strong>.
+
+        </div>
+
+      </div>
+
+
+      <div class="SUPPORT-5444654-PAGE-54545-modal-footer">
+
+        <button
+          type="button"
+          class="SUPPORT-5444654-PAGE-54545-close-btn"
+          (click)="closeReply()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="SUPPORT-5444654-PAGE-54545-reply-btn"
+          (click)="sendReply()">
+
+          <i class="bi bi-send"></i>
+
+          Send Reply
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

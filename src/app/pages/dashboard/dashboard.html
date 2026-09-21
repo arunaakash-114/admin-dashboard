@@ -1,0 +1,397 @@
+<div class="DASH-685857-BOARD-656788-wrapper">
+  <app-sidebar></app-sidebar>
+
+
+  <!-- Main Content -->
+  <main class="DASH-685857-BOARD-656788-main">
+
+    <!-- Desktop Header -->
+    <header class="DASH-685857-BOARD-656788-top-header">
+
+      <div>
+
+        <h2>Dashboard</h2>
+
+        <p>
+          Welcome back, Admin. Here's what's happening today.
+        </p>
+
+      </div>
+
+
+      <div class="DASH-685857-BOARD-656788-header-actions">
+
+        <button class="DASH-685857-BOARD-656788-icon-btn">
+
+          <i class="bi bi-search"></i>
+
+        </button>
+
+        <button class="DASH-685857-BOARD-656788-icon-btn">
+
+          <i class="bi bi-bell"></i>
+
+          <span class="DASH-685857-BOARD-656788-notification-dot"></span>
+
+        </button>
+
+
+        <div class="DASH-685857-BOARD-656788-admin-mini">
+
+          <div class="DASH-685857-BOARD-656788-mini-avatar">
+            AK
+          </div>
+
+          <div>
+            <strong>Admin</strong>
+            <span>Administrator</span>
+          </div>
+
+          <i class="bi bi-chevron-down"></i>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- Mobile Page Heading -->
+    <div class="DASH-685857-BOARD-656788-mobile-page-title">
+
+      <h2>Dashboard</h2>
+
+      <p>
+        Community overview and activity
+      </p>
+
+    </div>
+
+
+    <!-- Main Stats -->
+    <section class="DASH-685857-BOARD-656788-stats-grid">
+
+
+      <!-- Users -->
+      <div class="DASH-685857-BOARD-656788-stat-card">
+
+        <div class="DASH-685857-BOARD-656788-stat-top">
+
+          <div class="DASH-685857-BOARD-656788-stat-icon users">
+            <i class="bi bi-people-fill"></i>
+          </div>
+
+          <span class="DASH-685857-BOARD-656788-stat-growth">
+            +12.4%
+          </span>
+
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-value">
+          {{ dashboardData.totalUsers | number }}
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-label">
+          Total Users
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-footer">
+          <span>
+            {{ dashboardData.newRegistrations }} new today
+          </span>
+          <i class="bi bi-arrow-up-right"></i>
+        </div>
+
+      </div>
+
+
+      <!-- Active Users -->
+      <div class="DASH-685857-BOARD-656788-stat-card">
+
+        <div class="DASH-685857-BOARD-656788-stat-top">
+
+          <div class="DASH-685857-BOARD-656788-stat-icon active">
+            <i class="bi bi-person-check-fill"></i>
+          </div>
+
+          <span class="DASH-685857-BOARD-656788-stat-growth">
+            +8.2%
+          </span>
+
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-value">
+          {{ dashboardData.activeUsers | number }}
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-label">
+          Active Users
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-footer">
+          <span>
+            {{ dashboardData.newRegistrations }} new today
+          </span>
+          <i class="bi bi-arrow-up-right"></i>
+        </div>
+
+      </div>
+
+
+      <!-- Messages -->
+      <div class="DASH-685857-BOARD-656788-stat-card">
+
+        <div class="DASH-685857-BOARD-656788-stat-top">
+
+          <div class="DASH-685857-BOARD-656788-stat-icon messages">
+            <i class="bi bi-chat-left-text-fill"></i>
+          </div>
+
+          <span class="DASH-685857-BOARD-656788-stat-growth">
+            +18.5%
+          </span>
+
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-value">
+          {{ dashboardData.totalMessages | number }}
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-label">
+          Total Messages
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-footer">
+          <span>Community messages</span>
+          <i class="bi bi-arrow-up-right"></i>
+        </div>
+
+      </div>
+
+
+      <!-- Support -->
+      <div class="DASH-685857-BOARD-656788-stat-card">
+
+        <div class="DASH-685857-BOARD-656788-stat-top">
+
+          <div class="DASH-685857-BOARD-656788-stat-icon support">
+            <i class="bi bi-headset"></i>
+          </div>
+
+          <span class="DASH-685857-BOARD-656788-stat-growth warning">
+            {{ dashboardData.supportTickets }}
+          </span>
+
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-value">
+          {{ dashboardData.supportTickets }}
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-label">
+          Support Tickets
+        </div>
+
+        <div class="DASH-685857-BOARD-656788-stat-footer">
+          <span>Need attention</span>
+          <i class="bi bi-arrow-right"></i>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Content Statistics -->
+    <section class="DASH-685857-BOARD-656788-section">
+
+      <div class="DASH-685857-BOARD-656788-section-header">
+
+        <div>
+          <h3>Content Overview</h3>
+          <p>Community content statistics</p>
+        </div>
+
+        <button class="DASH-685857-BOARD-656788-view-btn">
+          View Reports
+          <i class="bi bi-arrow-right"></i>
+        </button>
+
+      </div>
+
+
+      <div class="DASH-685857-BOARD-656788-content-grid">
+
+        <div
+          class="DASH-685857-BOARD-656788-content-card"
+          *ngFor="let item of contentStats">
+
+          <div
+            class="DASH-685857-BOARD-656788-content-icon">
+
+            <i [class]="'bi ' + item.icon"></i>
+
+          </div>
+
+          <div class="DASH-685857-BOARD-656788-content-info">
+
+            <span>{{ item.title }}</span>
+
+            <strong>
+              {{ item.value | number }}
+            </strong>
+
+          </div>
+
+          <span class="DASH-685857-BOARD-656788-content-growth">
+            {{ item.percentage }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Bottom Section -->
+    <section class="DASH-685857-BOARD-656788-bottom-grid">
+
+
+      <!-- Recent Users -->
+      <div class="DASH-685857-BOARD-656788-panel">
+
+        <div class="DASH-685857-BOARD-656788-panel-header">
+
+          <div>
+            <h3>Recent Users</h3>
+            <p>Latest registered community members</p>
+          </div>
+
+          <button class="DASH-685857-BOARD-656788-more-btn">
+            View All
+          </button>
+
+        </div>
+
+
+        <div class="DASH-685857-BOARD-656788-table-wrapper">
+
+          <table class="table DASH-685857-BOARD-656788-table">
+
+            <thead>
+
+              <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let user of recentUsers">
+
+                <td>
+
+                  <div class="DASH-685857-BOARD-656788-user">
+
+                    <div class="DASH-685857-BOARD-656788-user-avatar">
+                      {{ user.name.charAt(0) }}
+                    </div>
+
+                    <div>
+                      <strong>{{ user.name }}</strong>
+                      <span>{{ user.email }}</span>
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td>
+                  {{ user.date }}
+                </td>
+
+                <td>
+
+                  <span
+                    class="DASH-685857-BOARD-656788-status"
+                    [class.active]="user.status === 'Active'"
+                    [class.pending]="user.status === 'Pending'"
+                    [class.blocked]="user.status === 'Blocked'">
+
+                    {{ user.status }}
+
+                  </span>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- Recent Activity -->
+      <div class="DASH-685857-BOARD-656788-panel">
+
+        <div class="DASH-685857-BOARD-656788-panel-header">
+
+          <div>
+            <h3>Recent Activity</h3>
+            <p>Latest community activities</p>
+          </div>
+
+        </div>
+
+
+        <div class="DASH-685857-BOARD-656788-activity-list">
+
+          <div
+            class="DASH-685857-BOARD-656788-activity"
+            *ngFor="let activity of activityData">
+
+            <div class="DASH-685857-BOARD-656788-activity-icon">
+
+              <i
+                class="bi"
+                [class]="activity.icon">
+              </i>
+
+            </div>
+
+            <div class="DASH-685857-BOARD-656788-activity-content">
+
+              <strong>
+                {{ activity.title }}
+              </strong>
+
+              <span>
+                {{ activity.description }}
+              </span>
+
+            </div>
+
+            <time>
+              {{ activity.time }}
+            </time>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+</div>

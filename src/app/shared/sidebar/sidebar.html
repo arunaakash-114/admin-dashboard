@@ -1,0 +1,119 @@
+<header class="DASH-685857-BOARD-656788-mobile-header">
+  <div class="DASH-685857-BOARD-656788-mobile-logo">
+    <div class="DASH-685857-BOARD-656788-logo-icon">C</div>
+    <span>Community Admin</span>
+  </div>
+
+  <button
+    type="button"
+    class="DASH-685857-BOARD-656788-menu-btn"
+    (click)="toggleSidebar()"
+    aria-label="Open navigation menu">
+    <i class="bi bi-list"></i>
+  </button>
+</header>
+
+<div
+  class="DASH-685857-BOARD-656788-overlay"
+  [class.active]="sidebarOpen"
+  (click)="closeSidebar()">
+</div>
+
+<aside
+  class="DASH-685857-BOARD-656788-sidebar"
+  [class.mobile-open]="sidebarOpen">
+  <div class="DASH-685857-BOARD-656788-sidebar-logo">
+    <div class="DASH-685857-BOARD-656788-logo-icon">C</div>
+
+    <div>
+      <h5>Community</h5>
+      <span>Admin Panel</span>
+    </div>
+  </div>
+
+  <nav class="DASH-685857-BOARD-656788-navigation">
+    <div class="DASH-685857-BOARD-656788-nav-title">MAIN MENU</div>
+
+    <a
+      class="DASH-685857-BOARD-656788-nav-item"
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeSidebar()">
+      <i class="bi bi-grid-1x2-fill"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <a
+      class="DASH-685857-BOARD-656788-nav-item"
+      routerLink="/users"
+      routerLinkActive="active"
+      (click)="closeSidebar()">
+      <i class="bi bi-people-fill"></i>
+      <span>Users</span>
+    </a>
+
+    <a
+      class="DASH-685857-BOARD-656788-nav-item"
+      routerLink="/support"
+      routerLinkActive="active"
+      (click)="closeSidebar()">
+      <i class="bi bi-headset"></i>
+      <span>Customer Support</span>
+      <span class="DASH-685857-BOARD-656788-nav-badge">86</span>
+    </a>
+
+    <div class="DASH-685857-BOARD-656788-nav-title">CONTENT</div>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/stories" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-camera-reels-fill"></i>
+      <span>Stories</span>
+    </a>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/videos" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-play-btn-fill"></i>
+      <span>Videos</span>
+    </a>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/music" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-music-note-beamed"></i>
+      <span>Music</span>
+    </a>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/images" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-images"></i>
+      <span>Images</span>
+    </a>
+
+    <div class="DASH-685857-BOARD-656788-nav-title">COMMUNICATION</div>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/messages" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-chat-dots-fill"></i>
+      <span>Messages</span>
+    </a>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/reports" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-flag-fill"></i>
+      <span>Reports</span>
+      <span class="DASH-685857-BOARD-656788-nav-badge danger">24</span>
+    </a>
+
+    <div class="DASH-685857-BOARD-656788-nav-title">SYSTEM</div>
+
+    <a class="DASH-685857-BOARD-656788-nav-item" routerLink="/settings" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="bi bi-gear-fill"></i>
+      <span>Settings</span>
+    </a>
+  </nav>
+
+  <div class="DASH-685857-BOARD-656788-sidebar-profile">
+    <div class="DASH-685857-BOARD-656788-profile-avatar">AK</div>
+
+    <div class="DASH-685857-BOARD-656788-profile-info">
+      <strong>Admin</strong>
+      <span>Administrator</span>
+    </div>
+
+    <i class="bi bi-three-dots-vertical"></i>
+  </div>
+</aside>

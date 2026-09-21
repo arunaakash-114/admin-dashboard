@@ -1,0 +1,979 @@
+<app-sidebar></app-sidebar>
+
+<main class="USERS-5444654-LIST-54545-page">
+
+  <!-- Page Header -->
+  <div class="USERS-5444654-LIST-54545-header">
+
+    <div class="USERS-5444654-LIST-54545-title-area">
+
+      <div class="USERS-5444654-LIST-54545-breadcrumb">
+        Community Admin
+        <i class="bi bi-chevron-right"></i>
+        Users
+      </div>
+
+      <h2>Registered Users</h2>
+
+      <p>
+        Manage community members, account status and access permissions.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="USERS-5444654-LIST-54545-export-btn"
+      (click)="exportUsers()">
+
+      <i class="bi bi-download"></i>
+
+      <span>Export Users</span>
+
+    </button>
+
+  </div>
+
+
+  <!-- Statistics -->
+  <div class="USERS-5444654-LIST-54545-stats">
+
+    <!-- Total -->
+    <div class="USERS-5444654-LIST-54545-stat-card">
+
+      <div class="USERS-5444654-LIST-54545-stat-icon total">
+        <i class="bi bi-people-fill"></i>
+      </div>
+
+      <div class="USERS-5444654-LIST-54545-stat-content">
+
+        <span>Total Users</span>
+
+        <strong>
+          {{ users.length | number }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Active -->
+    <div class="USERS-5444654-LIST-54545-stat-card">
+
+      <div class="USERS-5444654-LIST-54545-stat-icon active">
+        <i class="bi bi-person-check-fill"></i>
+      </div>
+
+      <div class="USERS-5444654-LIST-54545-stat-content">
+
+        <span>Active Users</span>
+
+        <strong>
+          {{ activeUsers | number }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Inactive -->
+    <div class="USERS-5444654-LIST-54545-stat-card">
+
+      <div class="USERS-5444654-LIST-54545-stat-icon inactive">
+        <i class="bi bi-person-dash-fill"></i>
+      </div>
+
+      <div class="USERS-5444654-LIST-54545-stat-content">
+
+        <span>Inactive</span>
+
+        <strong>
+          {{ inactiveUsers | number }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Blocked -->
+    <div class="USERS-5444654-LIST-54545-stat-card">
+
+      <div class="USERS-5444654-LIST-54545-stat-icon blocked">
+        <i class="bi bi-person-x-fill"></i>
+      </div>
+
+      <div class="USERS-5444654-LIST-54545-stat-content">
+
+        <span>Blocked</span>
+
+        <strong>
+          {{ blockedUsers | number }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- Full Access -->
+    <div class="USERS-5444654-LIST-54545-stat-card">
+
+      <div class="USERS-5444654-LIST-54545-stat-icon access">
+        <i class="bi bi-shield-check"></i>
+      </div>
+
+      <div class="USERS-5444654-LIST-54545-stat-content">
+
+        <span>Full Access</span>
+
+        <strong>
+          {{ fullAccessUsers | number }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Filter Area -->
+  <div class="USERS-5444654-LIST-54545-filter-card">
+
+    <div class="USERS-5444654-LIST-54545-search">
+
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+        placeholder="Search name, email, phone or user ID..."
+      />
+
+      <button
+        *ngIf="searchText"
+        type="button"
+        class="USERS-5444654-LIST-54545-clear-search"
+        (click)="searchText = ''; onSearch()">
+
+        <i class="bi bi-x"></i>
+
+      </button>
+
+    </div>
+
+
+    <div class="USERS-5444654-LIST-54545-filter-group">
+
+      <select
+        class="USERS-5444654-LIST-54545-select"
+        [(ngModel)]="selectedStatus"
+        (change)="onFilterChange()">
+
+        <option value="All">
+          All Status
+        </option>
+
+        <option value="Active">
+          Active
+        </option>
+
+        <option value="Inactive">
+          Inactive
+        </option>
+
+        <option value="Blocked">
+          Blocked
+        </option>
+
+      </select>
+
+
+      <select
+        class="USERS-5444654-LIST-54545-select"
+        [(ngModel)]="selectedAccess"
+        (change)="onFilterChange()">
+
+        <option value="All">
+          All Access
+        </option>
+
+        <option value="Full Access">
+          Full Access
+        </option>
+
+        <option value="Limited Access">
+          Limited Access
+        </option>
+
+        <option value="No Access">
+          No Access
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <!-- User List -->
+  <div class="USERS-5444654-LIST-54545-list-card">
+
+    <!-- List Header -->
+    <div class="USERS-5444654-LIST-54545-list-header">
+
+      <div>
+
+        <h3>All Registered Users</h3>
+
+        <span>
+          {{ filteredUsers.length }} users found
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Desktop Table -->
+    <div class="USERS-5444654-LIST-54545-table-wrapper">
+
+      <table class="USERS-5444654-LIST-54545-table">
+
+        <thead>
+
+          <tr>
+
+            <th>User</th>
+
+            <th>Phone</th>
+
+            <th>Registered</th>
+
+            <th>Last Active</th>
+
+            <th>Status</th>
+
+            <th>Access</th>
+
+            <th>Activity</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let user of paginatedUsers">
+
+            <!-- User -->
+            <td>
+
+              <div class="USERS-5444654-LIST-54545-user">
+
+                <div class="USERS-5444654-LIST-54545-avatar">
+                  {{ user.avatar }}
+                </div>
+
+                <div class="USERS-5444654-LIST-54545-user-info">
+
+                  <strong>
+                    {{ user.name }}
+                  </strong>
+
+                  <span>
+                    {{ user.email }}
+                  </span>
+
+                  <small>
+                    ID #{{ user.id }}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- Phone -->
+            <td>
+              <span class="USERS-5444654-LIST-54545-phone">
+                {{ user.phone }}
+              </span>
+            </td>
+
+
+            <!-- Registered -->
+            <td>
+              <span class="USERS-5444654-LIST-54545-date">
+                {{ user.registeredDate }}
+              </span>
+            </td>
+
+
+            <!-- Last Active -->
+            <td>
+              <span class="USERS-5444654-LIST-54545-last-active">
+                {{ user.lastActive }}
+              </span>
+            </td>
+
+
+            <!-- Status -->
+            <td>
+
+              <span
+                class="USERS-5444654-LIST-54545-status"
+                [class.active]="user.status === 'Active'"
+                [class.inactive]="user.status === 'Inactive'"
+                [class.blocked]="user.status === 'Blocked'">
+
+                <span></span>
+
+                {{ user.status }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Access -->
+            <td>
+
+              <span
+                class="USERS-5444654-LIST-54545-access"
+                [class.full]="user.access === 'Full Access'"
+                [class.limited]="user.access === 'Limited Access'"
+                [class.no-access]="user.access === 'No Access'">
+
+                <i
+                  class="bi"
+                  [class.bi-shield-check]="user.access === 'Full Access'"
+                  [class.bi-shield-exclamation]="user.access === 'Limited Access'"
+                  [class.bi-shield-x]="user.access === 'No Access'">
+                </i>
+
+                {{ user.access }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Activity -->
+            <td>
+
+              <div class="USERS-5444654-LIST-54545-activity">
+
+                <span>
+                  <i class="bi bi-camera-reels"></i>
+                  {{ user.stories }}
+                </span>
+
+                <span>
+                  <i class="bi bi-play-btn"></i>
+                  {{ user.videos }}
+                </span>
+
+                <span>
+                  <i class="bi bi-chat"></i>
+                  {{ user.messages }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- Action -->
+            <td>
+
+              <div class="USERS-5444654-LIST-54545-actions">
+
+                <button
+                  type="button"
+                  title="View User"
+                  (click)="viewUser(user)">
+
+                  <i class="bi bi-eye"></i>
+
+                </button>
+
+                <button
+                  type="button"
+                  title="Access Control"
+                  (click)="openAccessControl(user)">
+
+                  <i class="bi bi-shield-lock"></i>
+
+                </button>
+
+                <button
+                  type="button"
+                  title="Block User"
+                  [class.danger]="user.status !== 'Blocked'"
+                  (click)="blockUser(user)">
+
+                  <i
+                    class="bi"
+                    [class.bi-person-x]="user.status !== 'Blocked'"
+                    [class.bi-person-check]="user.status === 'Blocked'">
+                  </i>
+
+                </button>
+
+                <button
+                  type="button"
+                  title="Delete User"
+                  class="delete"
+                  (click)="deleteUser(user)">
+
+                  <i class="bi bi-trash"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- Empty -->
+          <tr *ngIf="paginatedUsers.length === 0">
+
+            <td
+              colspan="8"
+              class="USERS-5444654-LIST-54545-empty">
+
+              <i class="bi bi-people"></i>
+
+              <strong>No users found</strong>
+
+              <span>
+                Try changing your search or filter.
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- Mobile User Cards -->
+    <div class="USERS-5444654-LIST-54545-mobile-list">
+
+      <div
+        class="USERS-5444654-LIST-54545-mobile-user"
+        *ngFor="let user of paginatedUsers">
+
+        <div class="USERS-5444654-LIST-54545-mobile-top">
+
+          <div class="USERS-5444654-LIST-54545-user">
+
+            <div class="USERS-5444654-LIST-54545-avatar">
+              {{ user.avatar }}
+            </div>
+
+            <div class="USERS-5444654-LIST-54545-user-info">
+
+              <strong>
+                {{ user.name }}
+              </strong>
+
+              <span>
+                {{ user.email }}
+              </span>
+
+              <small>
+                #{{ user.id }}
+              </small>
+
+            </div>
+
+          </div>
+
+
+          <div class="USERS-5444654-LIST-54545-mobile-menu">
+
+            <button
+              type="button"
+              (click)="viewUser(user)">
+
+              <i class="bi bi-three-dots-vertical"></i>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div class="USERS-5444654-LIST-54545-mobile-details">
+
+          <div>
+
+            <span>Phone</span>
+
+            <strong>
+              {{ user.phone }}
+            </strong>
+
+          </div>
+
+          <div>
+
+            <span>Registered</span>
+
+            <strong>
+              {{ user.registeredDate }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="USERS-5444654-LIST-54545-mobile-status-row">
+
+          <span
+            class="USERS-5444654-LIST-54545-status"
+            [class.active]="user.status === 'Active'"
+            [class.inactive]="user.status === 'Inactive'"
+            [class.blocked]="user.status === 'Blocked'">
+
+            <span></span>
+
+            {{ user.status }}
+
+          </span>
+
+
+          <span
+            class="USERS-5444654-LIST-54545-access"
+            [class.full]="user.access === 'Full Access'"
+            [class.limited]="user.access === 'Limited Access'"
+            [class.no-access]="user.access === 'No Access'">
+
+            {{ user.access }}
+
+          </span>
+
+        </div>
+
+
+        <div class="USERS-5444654-LIST-54545-mobile-actions">
+
+          <button
+            type="button"
+            (click)="viewUser(user)">
+
+            <i class="bi bi-eye"></i>
+            View
+
+          </button>
+
+          <button
+            type="button"
+            (click)="openAccessControl(user)">
+
+            <i class="bi bi-shield-lock"></i>
+            Access
+
+          </button>
+
+          <button
+            type="button"
+            (click)="toggleUserStatus(user)">
+
+            <i class="bi bi-person-check"></i>
+
+            {{ user.status === 'Active' ? 'Disable' : 'Enable' }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        *ngIf="paginatedUsers.length === 0"
+        class="USERS-5444654-LIST-54545-mobile-empty">
+
+        <i class="bi bi-people"></i>
+
+        <strong>No users found</strong>
+
+        <span>
+          Try changing your search or filter.
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Pagination -->
+    <div
+      class="USERS-5444654-LIST-54545-pagination"
+      *ngIf="filteredUsers.length > 0">
+
+      <span>
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+
+      <div>
+
+        <button
+          type="button"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+
+          <i class="bi bi-chevron-left"></i>
+
+        </button>
+
+        <button
+          type="button"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          [class.active]="currentPage === i + 1"
+          (click)="goToPage(i + 1)">
+
+          {{ i + 1 }}
+
+        </button>
+
+        <button
+          type="button"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+
+          <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- =====================================================
+     USER DETAILS MODAL
+===================================================== -->
+
+<div
+  class="USERS-5444654-LIST-54545-modal-overlay"
+  *ngIf="showUserModal"
+  (click)="closeUserModal()">
+
+  <div
+    class="USERS-5444654-LIST-54545-modal"
+    (click)="$event.stopPropagation()">
+
+    <div class="USERS-5444654-LIST-54545-modal-header">
+
+      <div>
+
+        <h3>User Details</h3>
+
+        <span>
+          Community member information
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        (click)="closeUserModal()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="USERS-5444654-LIST-54545-modal-body"
+      *ngIf="selectedUser">
+
+      <div class="USERS-5444654-LIST-54545-user-profile">
+
+        <div class="USERS-5444654-LIST-54545-large-avatar">
+          {{ selectedUser.avatar }}
+        </div>
+
+        <div>
+
+          <h4>
+            {{ selectedUser.name }}
+          </h4>
+
+          <span>
+            {{ selectedUser.email }}
+          </span>
+
+          <small>
+            User ID #{{ selectedUser.id }}
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="USERS-5444654-LIST-54545-detail-grid">
+
+        <div>
+          <span>Phone</span>
+          <strong>{{ selectedUser.phone }}</strong>
+        </div>
+
+        <div>
+          <span>Registered</span>
+          <strong>{{ selectedUser.registeredDate }}</strong>
+        </div>
+
+        <div>
+          <span>Last Active</span>
+          <strong>{{ selectedUser.lastActive }}</strong>
+        </div>
+
+        <div>
+          <span>Status</span>
+          <strong>{{ selectedUser.status }}</strong>
+        </div>
+
+        <div>
+          <span>Access</span>
+          <strong>{{ selectedUser.access }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="USERS-5444654-LIST-54545-user-activity">
+
+        <h4>Content Activity</h4>
+
+        <div>
+
+          <span>
+            <i class="bi bi-camera-reels"></i>
+            Stories
+            <strong>{{ selectedUser.stories }}</strong>
+          </span>
+
+          <span>
+            <i class="bi bi-play-btn"></i>
+            Videos
+            <strong>{{ selectedUser.videos }}</strong>
+          </span>
+
+          <span>
+            <i class="bi bi-chat"></i>
+            Messages
+            <strong>{{ selectedUser.messages }}</strong>
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="USERS-5444654-LIST-54545-modal-footer">
+
+      <button
+        type="button"
+        class="USERS-5444654-LIST-54545-secondary-btn"
+        (click)="closeUserModal()">
+
+        Close
+
+      </button>
+
+      <button
+        type="button"
+        class="USERS-5444654-LIST-54545-primary-btn"
+        *ngIf="selectedUser"
+        (click)="closeUserModal(); openAccessControl(selectedUser)">
+
+        <i class="bi bi-shield-lock"></i>
+
+        Manage Access
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     ACCESS CONTROL MODAL
+===================================================== -->
+
+<div
+  class="USERS-5444654-LIST-54545-modal-overlay"
+  *ngIf="showAccessModal"
+  (click)="closeAccessModal()">
+
+  <div
+    class="USERS-5444654-LIST-54545-access-modal"
+    (click)="$event.stopPropagation()">
+
+    <div class="USERS-5444654-LIST-54545-modal-header">
+
+      <div>
+
+        <h3>User Access Control</h3>
+
+        <span *ngIf="selectedUser">
+          Manage {{ selectedUser.name }}'s permissions
+        </span>
+
+      </div>
+
+      <button
+        type="button"
+        (click)="closeAccessModal()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="USERS-5444654-LIST-54545-access-options"
+      *ngIf="selectedUser">
+
+
+      <!-- Full Access -->
+      <button
+        type="button"
+        class="USERS-5444654-LIST-54545-access-option"
+        [class.selected]="selectedUser.access === 'Full Access'"
+        (click)="changeAccess('Full Access')">
+
+        <div class="USERS-5444654-LIST-54545-option-icon full">
+
+          <i class="bi bi-shield-check"></i>
+
+        </div>
+
+        <div>
+
+          <strong>Full Access</strong>
+
+          <span>
+            User can use all community features,
+            upload content and send messages.
+          </span>
+
+        </div>
+
+        <i
+          class="bi"
+          [class.bi-check-circle-fill]="selectedUser.access === 'Full Access'"
+          [class.bi-circle]="selectedUser.access !== 'Full Access'">
+        </i>
+
+      </button>
+
+
+      <!-- Limited Access -->
+      <button
+        type="button"
+        class="USERS-5444654-LIST-54545-access-option"
+        [class.selected]="selectedUser.access === 'Limited Access'"
+        (click)="changeAccess('Limited Access')">
+
+        <div class="USERS-5444654-LIST-54545-option-icon limited">
+
+          <i class="bi bi-shield-exclamation"></i>
+
+        </div>
+
+        <div>
+
+          <strong>Limited Access</strong>
+
+          <span>
+            User can browse the community but
+            selected features may be restricted.
+          </span>
+
+        </div>
+
+        <i
+          class="bi"
+          [class.bi-check-circle-fill]="selectedUser.access === 'Limited Access'"
+          [class.bi-circle]="selectedUser.access !== 'Limited Access'">
+        </i>
+
+      </button>
+
+
+      <!-- No Access -->
+      <button
+        type="button"
+        class="USERS-5444654-LIST-54545-access-option"
+        [class.selected]="selectedUser.access === 'No Access'"
+        (click)="changeAccess('No Access')">
+
+        <div class="USERS-5444654-LIST-54545-option-icon no-access">
+
+          <i class="bi bi-shield-x"></i>
+
+        </div>
+
+        <div>
+
+          <strong>No Access</strong>
+
+          <span>
+            User is blocked from accessing
+            community features.
+          </span>
+
+        </div>
+
+        <i
+          class="bi"
+          [class.bi-check-circle-fill]="selectedUser.access === 'No Access'"
+          [class.bi-circle]="selectedUser.access !== 'No Access'">
+        </i>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,227 @@
+.DASH-685857-BOARD-656788-mobile-header {
+  display: none;
+}
+
+.DASH-685857-BOARD-656788-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1000;
+  display: flex;
+  width: 260px;
+  flex-direction: column;
+  background: #ffffff;
+  border-right: 1px solid #e9edf3;
+}
+
+.DASH-685857-BOARD-656788-sidebar-logo {
+  display: flex;
+  height: 78px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 22px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.DASH-685857-BOARD-656788-logo-icon {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.DASH-685857-BOARD-656788-sidebar-logo h5 {
+  margin: 0;
+  color: #172033;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.DASH-685857-BOARD-656788-sidebar-logo span {
+  display: block;
+  margin-top: 2px;
+  color: #98a2b3;
+  font-size: 11px;
+}
+
+.DASH-685857-BOARD-656788-navigation {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 12px;
+}
+
+.DASH-685857-BOARD-656788-nav-title {
+  padding: 13px 12px 7px;
+  color: #98a2b3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.DASH-685857-BOARD-656788-nav-item {
+  position: relative;
+  display: flex;
+  min-height: 45px;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 3px;
+  padding: 0 12px;
+  border-radius: 9px;
+  color: #667085;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.DASH-685857-BOARD-656788-nav-item i {
+  width: 25px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.DASH-685857-BOARD-656788-nav-item:hover,
+.DASH-685857-BOARD-656788-nav-item.active {
+  background: #eff4ff;
+  color: #2563eb;
+}
+
+.DASH-685857-BOARD-656788-nav-item.active {
+  font-weight: 600;
+}
+
+.DASH-685857-BOARD-656788-nav-badge {
+  min-width: 22px;
+  margin-left: auto;
+  padding: 3px 6px;
+  border-radius: 20px;
+  background: #e8efff;
+  color: #2563eb;
+  font-size: 10px;
+  text-align: center;
+}
+
+.DASH-685857-BOARD-656788-nav-badge.danger {
+  background: #fff0f0;
+  color: #ef4444;
+}
+
+.DASH-685857-BOARD-656788-sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-top: 1px solid #eef1f5;
+}
+
+.DASH-685857-BOARD-656788-profile-avatar {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eaf0ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.DASH-685857-BOARD-656788-profile-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.DASH-685857-BOARD-656788-profile-info strong {
+  color: #344054;
+  font-size: 12px;
+}
+
+.DASH-685857-BOARD-656788-profile-info span {
+  color: #98a2b3;
+  font-size: 10px;
+}
+
+.DASH-685857-BOARD-656788-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .DASH-685857-BOARD-656788-mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    display: flex;
+    height: 65px;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #e9edf3;
+  }
+
+  .DASH-685857-BOARD-656788-mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .DASH-685857-BOARD-656788-mobile-logo .DASH-685857-BOARD-656788-logo-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    font-size: 16px;
+  }
+
+  .DASH-685857-BOARD-656788-menu-btn {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e4e7ec;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #344054;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .DASH-685857-BOARD-656788-sidebar {
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: 8px 0 30px rgba(16, 24, 40, 0.12);
+    z-index: 1200;
+  }
+
+  .DASH-685857-BOARD-656788-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .DASH-685857-BOARD-656788-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: block;
+    background: rgba(16, 24, 40, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .DASH-685857-BOARD-656788-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
